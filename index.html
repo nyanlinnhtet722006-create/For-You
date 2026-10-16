@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For You ❤️</title>
+    <title>For My Baby ❤️</title>
     <style>
         body {
             margin: 0;
@@ -16,6 +16,7 @@
             font-family: Arial, sans-serif;
             overflow: hidden;
             text-align: center;
+            transition: background-color 0.5s ease;
         }
         .container {
             background: white;
@@ -23,64 +24,157 @@
             border-radius: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             position: relative;
-            width: 300px;
+            width: 320px;
         }
         h2 {
             color: #d63384;
             margin-bottom: 20px;
+            font-size: 18px;
         }
-        .buttons {
+        .btn-group {
             display: flex;
             justify-content: space-around;
-            position: relative;
             margin-top: 20px;
+            position: relative;
+            height: 50px;
         }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
+        .btn {
+            padding: 10px 18px;
+            font-size: 15px;
             border: none;
             border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
+            transition: 0.2s ease;
         }
-        #yesBtn {
+        #btn-yes {
             background-color: #ff4d4d;
             color: white;
         }
-        #noBtn {
+        #btn-no {
             background-color: #ccc;
             color: #333;
-            position: absolute;
-            left: 150px;
-            transition: 0.1s;
+            position: relative;
+        }
+        .gif-box {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 15px auto;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .gif-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>ကိုယ့်ကို ချစ်လားဟင်? 🥺</h2>
-        <div class="buttons">
-            <button id="yesBtn" onclick="sayYes()">ချစ်တယ်</button>
-            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">မချစ်ဘူး</button>
+    <div class="container" id="main-container">
+        <div class="gif-box">
+            <img id="gif" src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3FzaXFndXJ3aGphODR2bWNlM2pndm96NXN2cGNnMnN3aHl6eWZlaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oKIPnAiaMCws8nOsE/giphy.gif" alt="Cute">
+        </div>
+        <h2 id="question">ကိုကို ဘေဘီ့ကို ဘယ်လောက်ချစ်လဲ</h2>
+        <div class="btn-group" id="btn-group">
+            <button class="btn" id="btn-yes" onclick="handleYes()">များကြီးချစ်တာပေါ့ဗျာ</button>
+            <button class="btn" id="btn-no" onclick="handleNo()">သေးသေးလေးဘဲ ချစ်တာ</button>
         </div>
     </div>
 
     <script>
-        function moveButton() {
-            const noBtn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 100);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 100);
-            
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
+        let page = 1;
+        let clickCount = 0;
+
+        function handleYes() {
+            if (page === 1) {
+                page = 2;
+                clickCount = 0;
+                resetButtonStyle();
+                document.getElementById('question').innerText = "ဘာလို့ များကြီးချစ်တာလဲ";
+                document.getElementById('btn-yes').innerText = "ဘေဘီ ဖစ်နေလို့";
+                document.getElementById('btn-no').innerText = "စားချင်လို့";
+            } else if (page === 2) {
+                page = 3;
+                clickCount = 0;
+                resetButtonStyle();
+                document.getElementById('question').innerText = "မာနကြီးတယ်ဆိုပြီး ထားခဲ့အုန်းမှာလား";
+                document.getElementById('btn-yes').innerText = "မထားခဲ့ဘူး";
+                document.getElementById('btn-no').innerText = "အဲ့ဟာကြီးကိုပြင်ပါလား";
+            } else if (page === 3) {
+                page = 4;
+                clickCount = 0;
+                resetButtonStyle();
+                document.getElementById('question').innerText = "ဘေဘီပြောပြမယ် ဘေဘီ့ကိုချစ်ရင် အလိုလိုက်နော်";
+                document.getElementById('btn-yes').innerText = "အလိုလိုက်မယ်";
+                document.getElementById('btn-no').innerText = "ကိုကို့အလိုလဲပြန်လိုက်";
+            } else if (page === 4) {
+                page = 5;
+                document.getElementById('question').innerText = "အာဘွား လပ်ဗြူ mwh”🤪";
+                document.getElementById('btn-group').style.display = 'none';
+            }
         }
 
-        function sayYes() {
-            document.querySelector('.container').innerHTML = `
-                <h2 style="color: #28a745;">ဟီးဟီး သိပါတယ်နော် 🥰❤️</h2>
-            `;
+        function handleNo() {
+            const noBtn = document.getElementById('btn-no');
+
+            if (page === 1) {
+                clickCount++;
+                if (clickCount === 1) {
+                    document.getElementById('question').innerText = "အော် နင်က နဲနဲဘဲချစ်တာပေါ့😡";
+                } else {
+                    noBtn.style.transform = "scale(0.2)";
+                    noBtn.style.opacity = "0";
+                    setTimeout(() => { noBtn.style.display = "none"; }, 300);
+                    document.getElementById('question').innerText = "များကြီးချစ်တာပဲ နှိပ်လိုက်တော့နော်!😡";
+                }
+            } else if (page === 2) {
+                clickCount++;
+                if (clickCount === 1) {
+                    document.getElementById('question').innerText = "ကိုယ့်ခြေမ ကို စုပ်နေလို့ 🙃";
+                } else {
+                    moveButtonRandomly(noBtn);
+                    document.getElementById('question').innerText = "ဘေဘီဖစ်နေလို့ပဲ နှိပ်လိုက်တော့ 😜";
+                }
+            } else if (page === 3) {
+                clickCount++;
+                if (clickCount === 1) {
+                    document.getElementById('question').innerText = "မပြင်နိုင်ဘူး 😤";
+                } else if (clickCount === 2) {
+                    document.getElementById('question').innerText = "အော် ထပ်နှိပ်တယ်ပေါ့ 😒";
+                } else {
+                    noBtn.style.transform = "scale(0.2)";
+                    noBtn.style.opacity = "0";
+                    setTimeout(() => { noBtn.style.display = "none"; }, 300);
+                    document.getElementById('question').innerText = " ❤️";
+                }
+            } else if (page === 4) {
+                clickCount++;
+                if (clickCount === 1) {
+                    document.getElementById('question').innerText = "အော်အော် 🙄";
+                } else {
+                    noBtn.style.transform = "scale(0.2)";
+                    noBtn.style.opacity = "0";
+                    setTimeout(() => { noBtn.style.display = "none"; }, 300);
+                    document.getElementById('question').innerText = "သေလိုက် 🤣 အလိုလိုက်မယ်ပဲ နှိပ်လိုက်တော့နော်!";
+                }
+            }
+        }
+
+        function moveButtonRandomly(btn) {
+            btn.style.position = 'absolute';
+            const randomX = (Math.random() - 0.5) * 150;
+            const randomY = (Math.random() - 0.5) * 100;
+            btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        }
+
+        function resetButtonStyle() {
+            const noBtn = document.getElementById('btn-no');
+            noBtn.style.display = 'block';
+            noBtn.style.position = 'relative';
+            noBtn.style.transform = 'scale(1) translate(0, 0)';
+            noBtn.style.opacity = '1';
         }
     </script>
 
